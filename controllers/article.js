@@ -18,8 +18,11 @@ exports.createArticle = async (req, res, next) => {
         const linkList = []
 
         await $('.post-link').each((i, el) => {
+
             const link = $(el).attr('href')
+
             linkList.push(link)
+
         })
 
         lastArticles = [...linkList.slice(0, 5)]
@@ -44,8 +47,11 @@ exports.createArticle = async (req, res, next) => {
                 .get()
 
             for (let i = 0; i < images.length; i++) {
+
                 const name = Date.now().toString()
+
                 await savePhoto(images[i], name)
+
                 newImgsUrl.push('http://localhost:4000/photo/' + `${name}` + '.jpg')
             }
 
@@ -81,11 +87,13 @@ exports.createArticle = async (req, res, next) => {
 }
 
 const getPagination = (page, size) => {
+
     const limit = size ? +size : 2
     const offset = page ? page * limit : 0
 
     return { limit, offset }
 }
+
 
 exports.getArticles = async (req, res, next) => {
     try {
@@ -93,7 +101,8 @@ exports.getArticles = async (req, res, next) => {
         const { page, size } = req.query;
 
         const { limit, offset } = getPagination(page, size);
-        const articles = await Article.findAll({ limit, offset })
+
+        const articles = await Article.findAll({ attributes: ['id', 'title', 'text'], limit, offset })
 
         const clone = JSON.parse(JSON.stringify(articles))
 
@@ -102,6 +111,7 @@ exports.getArticles = async (req, res, next) => {
         }
 
         res.status(200).json(clone)
+
     } catch (e) {
         console.log(e)
         next(e)

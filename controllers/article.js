@@ -7,7 +7,7 @@ const savePhoto = require('../libs/savePhoto')
 
 exports.createArticle = async (req, res, next) => {
     try {
-        //get 5 articles urls
+        //get 5 articles url
         const articlesReq = await axios.get(config.URL,
             {
                 headers: { 'User-Agent': config.BROWSER }

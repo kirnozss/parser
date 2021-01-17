@@ -25,7 +25,6 @@ exports.createArticle = async (req, res, next) => {
         lastArticles = [...linkList.slice(0, 5)]
 
         // parse articles
-
         for (let i = 0; i < lastArticles.length; i++) {
 
             const url = lastArticles[i]
